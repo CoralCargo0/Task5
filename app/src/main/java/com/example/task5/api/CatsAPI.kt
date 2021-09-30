@@ -9,9 +9,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 interface CatsAPI {
-    @GET("images/search?")
-    suspend fun getListOfCats(): List<ApiData>
+    @GET("images/search?limit=5")
+    suspend fun getListOfCats(): List<Cat>
 }
+
 
 object CatsApiImpl {
     private val retrofit = Retrofit.Builder()
@@ -21,15 +22,9 @@ object CatsApiImpl {
 
     private val catsService = retrofit.create(CatsAPI::class.java)
 
-    suspend fun getListOfCats(): List<Cat>{
+    suspend fun getListOfCats(): List<Cat> {
         return withContext(Dispatchers.IO) {
             catsService.getListOfCats()
-                .map {
-                    Cat(
-                        "  ",
-                        it.imageUrl
-                    )
-                }
         }
     }
 }

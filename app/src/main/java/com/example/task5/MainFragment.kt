@@ -39,11 +39,11 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
 
         val adapter = CatsAdapter {
-            this.findNavController().navigate(R.id.action_mainFragment_to_detailFragment)
+            val action = MainFragmentDirections.actionMainFragmentToDetailFragment("${it.url}")
+            this.findNavController().navigate(action)
         }
         binding.list.layoutManager = LinearLayoutManager(this.context)
         binding.list.adapter = adapter
-        adapter.submitList(listOf(Cat("", "https://cdn2.thecatapi.com/images/d1o.jpg")))
         viewModel.cats.observe(this.viewLifecycleOwner, Observer {
             it ?: return@Observer
             adapter.submitList(it)
@@ -70,6 +70,11 @@ class MainFragment : Fragment() {
 //        }
 //
 //    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
     companion object {
     }

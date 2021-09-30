@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/activity_main.xml" value="0.23333333333333334" />
+        <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/back.xml" value="0.536" />
+        <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/fragment_detail.xml" value="0.176" />
         <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/fragment_main.xml" value="0.24739583333333334" />
         <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/fragment_main_list.xml" value="0.24739583333333334" />
+        <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/front.xml" value="0.1" />
+        <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/item.xml" value="0.264" />
+        <entry key="..\:/AAALL FROM RSSCHOOL/Task5/app/src/main/res/layout/item_back.xml" value="0.24739583333333334" />
       </map>
     </option>
   </component>

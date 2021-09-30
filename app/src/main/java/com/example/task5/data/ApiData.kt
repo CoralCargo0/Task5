@@ -5,5 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ApiData(
-    @Json(name = "url") val imageUrl: String?
+    @field:Json(name = "url") val imageUrl: String?
+    //@Json(name = "url") val imageUrl: String?
 )

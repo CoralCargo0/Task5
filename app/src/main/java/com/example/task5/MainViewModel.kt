@@ -15,13 +15,9 @@ class MainViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-            _cats.value = CatsApiImpl.getListOfCats()
-
         }
     }
+
+
+
 }

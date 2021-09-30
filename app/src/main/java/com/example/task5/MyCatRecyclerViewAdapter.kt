@@ -27,6 +27,9 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
     override fun onBindViewHolder(holder: CatsViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
+
+            // holder.bindi.catImageView.animate().rotationY(180f).duration = 500
+            //holder.bindi.catImageView.isClickable = true
             onItemClicked(current)
         }
         holder.bind(current)
@@ -34,9 +37,9 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
 
     class CatsViewHolder(private var binding: FragmentMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        val bindi = binding
         fun bind(cat: Cat) {
-            binding.catImageView.load(cat.imageUrl)
+            binding.catImageView.load(cat.url)
         }
     }
 
@@ -48,7 +51,7 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
             }
 
             override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.id == newItem.id
             }
         }
     }
