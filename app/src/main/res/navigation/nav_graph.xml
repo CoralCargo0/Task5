@@ -8,20 +8,21 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.task5.MainFragment"
-        android:label="fragment_main_list"
+        android:label="Main"
         tools:layout="@layout/fragment_main_list" >
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
             app:destination="@id/detailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:enterAnim="@animator/card_flip_right_in"
+            app:exitAnim="@animator/card_flip_right_out"
+            app:popEnterAnim="@animator/card_flip_left_in"
+            app:popExitAnim="@animator/card_flip_left_out"
+            />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.task5.DetailFragment"
-        android:label="fragment_detail"
+        android:label="Details"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="url"

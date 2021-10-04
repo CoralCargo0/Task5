@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.api.load
 import com.example.cats.data.Cat
-
+import com.example.task5.data.CatsRepository
+import com.example.task5.api.CatsApiImpl
 import com.example.task5.databinding.FragmentMainBinding
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
     ListAdapter<Cat, CatsAdapter.CatsViewHolder>(DiffCallback) {
+
+    val repo = CatsRepository.get()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsViewHolder {
         return CatsViewHolder(
@@ -29,10 +33,17 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
         holder.itemView.setOnClickListener {
 
             // holder.bindi.catImageView.animate().rotationY(180f).duration = 500
-            //holder.bindi.catImageView.isClickable = true
+            // holder.bindi.catImageView.isClickable = true
             onItemClicked(current)
         }
         holder.bind(current)
+        if (position % 20 == 15) {
+            GlobalScope.launch {
+                repo.mutableCats.postValue(
+                    repo.mutableCats.value?.plus(CatsApiImpl.getListOfCats())
+                )
+            }
+        }
     }
 
     class CatsViewHolder(private var binding: FragmentMainBinding) :
@@ -42,8 +53,6 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
             binding.catImageView.load(cat.url)
         }
     }
-
-
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Cat>() {
             override fun areItemsTheSame(oldItem: Cat, newItem: Cat): Boolean {
@@ -56,37 +65,3 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
         }
     }
 }
-
-//class MyCatRecyclerViewAdapter: RecyclerView.Adapter<CatsViewHolder>() {
-//
-//    private val cats = mutableListOf<Cats>()
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.cat_layout, null)
-//        return  CatsViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: CatsViewHolder, position: Int) {
-//        val imageUrl = cats[position].imageUrl ?: ""
-//        holder.bind(imageUrl)
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return cats.size
-//    }
-//
-//    fun addCats(newCats: List<Cats>) {
-//        cats.addAll(newCats)
-//        notifyDataSetChanged()
-//    }
-//
-//}
-//
-//class CatsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//
-//    private val imageView = view.findViewById<ImageView>(R.id.catImageView)
-//
-//    fun bind(imageUrl: String) {
-//        imageView.load(imageUrl)
-//    }
-//}

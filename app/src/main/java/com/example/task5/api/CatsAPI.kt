@@ -1,7 +1,6 @@
 package com.example.task5.api
 
 import com.example.cats.data.Cat
-import com.example.task5.data.ApiData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -9,10 +8,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 interface CatsAPI {
-    @GET("images/search?limit=5")
+    @GET("images/search?limit=20")
     suspend fun getListOfCats(): List<Cat>
 }
-
 
 object CatsApiImpl {
     private val retrofit = Retrofit.Builder()
