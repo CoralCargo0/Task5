@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import coil.api.load
+import coil.ImageLoader
+import coil.load
 import com.example.cats.data.Cat
 import com.example.task5.data.CatsRepository
 import com.example.task5.api.CatsApiImpl
@@ -13,7 +14,10 @@ import com.example.task5.databinding.FragmentMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
+class CatsAdapter(
+    private val imageLoader: ImageLoader,
+    private val onItemClicked: (Cat) -> Unit
+) :
     ListAdapter<Cat, CatsAdapter.CatsViewHolder>(DiffCallback) {
 
     val repo = CatsRepository.get()
@@ -36,7 +40,7 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
             // holder.bindi.catImageView.isClickable = true
             onItemClicked(current)
         }
-        holder.bind(current)
+        holder.bind(current, imageLoader)
         if (position % 20 == 15) {
             GlobalScope.launch {
                 repo.mutableCats.postValue(
@@ -49,10 +53,16 @@ class CatsAdapter(private val onItemClicked: (Cat) -> Unit) :
     class CatsViewHolder(private var binding: FragmentMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val bindi = binding
-        fun bind(cat: Cat) {
-            binding.catImageView.load(cat.url)
+        fun bind(cat: Cat, imageLoader: ImageLoader) {
+            binding.catImageView.loadWithLoader(
+                imageLoader,
+                cat.url!!,
+                R.drawable.giphy
+            )
+        // binding.catImageView.load(cat.url)
         }
     }
+
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Cat>() {
             override fun areItemsTheSame(oldItem: Cat, newItem: Cat): Boolean {

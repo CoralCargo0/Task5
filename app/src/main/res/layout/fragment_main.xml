@@ -12,13 +12,14 @@
             android:layout_height="200dp"
             android:layout_margin="8dp"
             android:layout_marginTop="12dp"
+            android:elevation="8dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:src="@drawable/giphy"/>
 
-                <View
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="3dp"

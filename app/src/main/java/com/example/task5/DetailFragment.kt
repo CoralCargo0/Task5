@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.fragment.navArgs
-import coil.api.load
+import coil.load
 import com.example.task5.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {

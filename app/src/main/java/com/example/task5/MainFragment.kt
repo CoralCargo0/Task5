@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
 import com.example.task5.databinding.FragmentMainListBinding
 
 class MainFragment : Fragment() {
@@ -30,9 +31,9 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val adapter = CatsAdapter {
+        val adapter = CatsAdapter(ImageLoader.invoke(requireContext())) {
             val action = MainFragmentDirections.actionMainFragmentToDetailFragment("${it.url}")
-            this.findNavController().navigate(action)
+            this.findNavController().navigate(MainFragmentDirections.actionMainFragmentToDetailFragment("${it.url}"))
         }
         binding.list.layoutManager = LinearLayoutManager(this.context)
         binding.list.adapter = adapter
