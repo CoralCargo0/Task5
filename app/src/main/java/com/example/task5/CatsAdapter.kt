@@ -1,15 +1,14 @@
 package com.example.task5
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
-import coil.load
-import com.example.cats.data.Cat
-import com.example.task5.data.CatsRepository
 import com.example.task5.api.CatsApiImpl
+import com.example.task5.data.Cat
+import com.example.task5.data.CatsRepository
 import com.example.task5.databinding.FragmentMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -59,7 +58,7 @@ class CatsAdapter(
                 cat.url!!,
                 R.drawable.giphy
             )
-        // binding.catImageView.load(cat.url)
+            // binding.catImageView.load(cat.url)
         }
     }
 

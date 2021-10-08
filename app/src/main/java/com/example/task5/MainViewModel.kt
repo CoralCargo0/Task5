@@ -2,8 +2,8 @@ package com.example.task5
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.task5.data.CatsRepository
 import com.example.task5.api.CatsApiImpl
+import com.example.task5.data.CatsRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {

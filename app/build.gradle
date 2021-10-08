@@ -55,7 +55,7 @@ dependencies {
 
 
     //paging
-    implementation("androidx.paging:paging-runtime:3.0.1")
+    implementation("androidx.paging:paging-runtime-ktx:3.0.1")
 
     //Coil
     implementation "com.airbnb.android:lottie:3.4.0"

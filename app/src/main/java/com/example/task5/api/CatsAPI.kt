@@ -1,8 +1,8 @@
 package com.example.task5.api
 
-import com.example.cats.data.Cat
 import com.example.task5.data.API_KEY
 import com.example.task5.data.BASE_URL
+import com.example.task5.data.Cat
 import com.example.task5.data.IMAGE_SHORT
 import com.example.task5.data.ITEMS_COUNT
 import kotlinx.coroutines.Dispatchers

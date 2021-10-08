@@ -3,7 +3,5 @@
   <component name="DetektProjectConfiguration">
     <enableDetekt>true</enableDetekt>
     <enableFormatting>true</enableFormatting>
-    <buildUponDefaultConfig>true</buildUponDefaultConfig>
-    <treatAsError>true</treatAsError>
   </component>
 </project>

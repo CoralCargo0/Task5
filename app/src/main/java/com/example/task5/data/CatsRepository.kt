@@ -2,7 +2,6 @@ package com.example.task5.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.cats.data.Cat
 
 const val IMAGE_QUALITY = 100
 const val BASE_URL = "https://api.thecatapi.com/v1/"
