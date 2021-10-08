@@ -1,10 +1,10 @@
-package com.example.task5.api
+package com.example.task5.network.api
 
-import com.example.task5.data.API_KEY
-import com.example.task5.data.BASE_URL
 import com.example.task5.data.Cat
-import com.example.task5.data.IMAGE_SHORT
-import com.example.task5.data.ITEMS_COUNT
+import com.example.task5.mvvm.API_KEY
+import com.example.task5.mvvm.BASE_URL
+import com.example.task5.mvvm.IMAGE_SHORT
+import com.example.task5.mvvm.ITEMS_COUNT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit

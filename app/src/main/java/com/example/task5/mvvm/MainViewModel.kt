@@ -1,21 +1,21 @@
-package com.example.task5
+package com.example.task5.mvvm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.task5.api.CatsApiImpl
-import com.example.task5.data.CatsRepository
+import com.example.task5.network.api.CatsApiImpl
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-
     val repository = CatsRepository.get()
+    fun addCats() {
+        viewModelScope.launch {
+            repository.addCats(CatsApiImpl.getListOfCats())
+        }
+    }
 
-    //    private val _cats = MutableLiveData<List<Cat>>()
-//    val cats: LiveData<List<Cat>> get() = _cats
     init {
         viewModelScope.launch {
             repository.initCats(CatsApiImpl.getListOfCats())
-            // _cats.value = CatsApiImpl.getListOfCats()
         }
     }
 }

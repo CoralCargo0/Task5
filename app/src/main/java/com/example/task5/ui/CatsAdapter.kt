@@ -1,25 +1,19 @@
-package com.example.task5
+package com.example.task5.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import com.example.task5.api.CatsApiImpl
+import coil.load
+import com.example.task5.R
 import com.example.task5.data.Cat
-import com.example.task5.data.CatsRepository
 import com.example.task5.databinding.FragmentMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CatsAdapter(
-    private val imageLoader: ImageLoader,
     private val onItemClicked: (Cat) -> Unit
 ) :
     ListAdapter<Cat, CatsAdapter.CatsViewHolder>(DiffCallback) {
-
-    val repo = CatsRepository.get()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsViewHolder {
         return CatsViewHolder(
@@ -34,38 +28,25 @@ class CatsAdapter(
     override fun onBindViewHolder(holder: CatsViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
-
-            // holder.bindi.catImageView.animate().rotationY(180f).duration = 500
-            // holder.bindi.catImageView.isClickable = true
             onItemClicked(current)
         }
-        holder.bind(current, imageLoader)
-        if (position % 20 == 15) {
-            GlobalScope.launch {
-                repo.mutableCats.postValue(
-                    repo.mutableCats.value?.plus(CatsApiImpl.getListOfCats())
-                )
-            }
-        }
+        holder.bind(current)
     }
 
     class CatsViewHolder(private var binding: FragmentMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val bindi = binding
-        fun bind(cat: Cat, imageLoader: ImageLoader) {
-            binding.catImageView.loadWithLoader(
-                imageLoader,
-                cat.url!!,
-                R.drawable.giphy
-            )
-            // binding.catImageView.load(cat.url)
+        fun bind(cat: Cat) {
+            binding.catImageView.load(cat.url) {
+                crossfade(true)
+                placeholder(R.drawable.progress)
+            }
         }
     }
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Cat>() {
             override fun areItemsTheSame(oldItem: Cat, newItem: Cat): Boolean {
-                return oldItem === newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean {

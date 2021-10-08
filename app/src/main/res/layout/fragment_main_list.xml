@@ -14,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".MainFragment"
+        tools:context=".ui.MainFragment"
         tools:listitem="@layout/fragment_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.task5
+package com.example.task5.ui
 
 import android.Manifest
 import android.content.ContentValues
@@ -15,7 +15,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.task5.data.IMAGE_QUALITY
+import com.example.task5.R
+import com.example.task5.mvvm.IMAGE_QUALITY
+import com.example.task5.sdk29AndUp
 import java.io.IOException
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), SaveInterface {
