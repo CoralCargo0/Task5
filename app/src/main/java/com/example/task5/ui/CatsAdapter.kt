@@ -46,11 +46,11 @@ class CatsAdapter(
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Cat>() {
             override fun areItemsTheSame(oldItem: Cat, newItem: Cat): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.url == newItem.url
             }
 
             override fun areContentsTheSame(oldItem: Cat, newItem: Cat): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.url == newItem.url
             }
         }
     }

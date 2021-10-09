@@ -1,4 +1,4 @@
-package com.example.task5
+package com.example.task5.ui
 
 import android.os.Build
 

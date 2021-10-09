@@ -1,29 +1,25 @@
 package com.example.task5.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.task5.R
 import com.example.task5.databinding.FragmentDetailBinding
+import com.example.task5.mvvm.MainViewModel
+import com.example.task5.savePhotoToExternalStorage
 
 class DetailFragment : Fragment() {
 
+    private val viewModel by viewModels<MainViewModel>()
     private val navigationArgs: DetailFragmentArgs by navArgs()
-
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var qw: SaveInterface
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        qw = context as SaveInterface
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,28 +27,37 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        bindUi()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val url = navigationArgs.url
-
-        binding.catview.load(url)
-
-        binding.saveButton.setOnClickListener {
-            saveToGallery()
+    private fun saveToGallery() {
+        binding.apply {
+            if (catview.drawable.toBitmap()
+                .savePhotoToExternalStorage(catId.text.toString(), requireContext())
+            ) {
+                saveButton.apply {
+                    isEnabled = false
+                    text = getString(R.string.saved)
+                }
+            }
         }
     }
 
-    private fun saveToGallery() {
-
-        val image = binding.catview.drawable
-        val bitmap = image.toBitmap()
-
-        if (qw.savePhotoToExternalStorage("", bitmap)) {
-            binding.saveButton.isEnabled = false
-            binding.saveButton.text = "Saved!"
+    private fun bindUi() {
+        val url = navigationArgs.url
+        val id = navigationArgs.id
+        binding.apply {
+            catview.load(url)
+            catId.text = id
+            saveButton.setOnClickListener {
+                saveToGallery()
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

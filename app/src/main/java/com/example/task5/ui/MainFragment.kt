@@ -10,66 +10,60 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task5.mvvm.MainViewModel
 import com.example.task5.databinding.FragmentMainListBinding
+import com.example.task5.isLastItemDisplaying
+import com.example.task5.mvvm.MainViewModel
 
 class MainFragment : Fragment() {
 
     private val viewModel by viewModels<MainViewModel>()
-    private var bbinding: FragmentMainListBinding? = null
-    private val binding get() = bbinding!!
+    private var _binding: FragmentMainListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bbinding = FragmentMainListBinding.inflate(inflater, container, false)
+        _binding = FragmentMainListBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        bindRecycler()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-
-        val adapter = CatsAdapter() {
-            val action = MainFragmentDirections.actionMainFragmentToDetailFragment("${it.url}")
+    private fun bindRecycler() {
+        val recyclerViewAdapter = CatsAdapter {
             this.findNavController()
-                .navigate(MainFragmentDirections.actionMainFragmentToDetailFragment("${it.url}"))
+                .navigate(
+                    MainFragmentDirections.actionMainFragmentToDetailFragment(
+                        "${it.url}",
+                        "${it.id}"
+                    )
+                )
         }
-        binding.list.layoutManager = GridLayoutManager(this.context, 2)
-        binding.list.adapter = adapter
+        binding.list.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = recyclerViewAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (isLastItemDisplaying()) {
+                        viewModel.addCats()
+                    }
+                }
+            })
+        }
         viewModel.repository.cats.observe(
             this.viewLifecycleOwner,
             Observer {
                 it ?: return@Observer
-                adapter.submitList(it)
+                recyclerViewAdapter.submitList(it)
             }
         )
-
-        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (isLastItemDisplaying(recyclerView)) {
-                    viewModel.addCats()
-                }
-            }
-        })
-    }
-
-    private fun isLastItemDisplaying(recyclerView: RecyclerView): Boolean {
-        if (recyclerView.adapter!!.itemCount != 0) {
-            val lastVisibleItemPosition =
-                (recyclerView.layoutManager as GridLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition >= recyclerView.adapter!!
-                .itemCount - 4
-            ) return true
-        }
-        return false
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        bbinding = null
+        _binding = null
     }
 }
