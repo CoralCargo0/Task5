@@ -10,7 +10,7 @@ const val IMAGE_SHORT = "images/search?"
 const val API_KEY = "api_key=e82cbab1-915f-4062-a332-2babb784e6a0"
 const val ITEMS_COUNT = "limit=20"
 
-class CatsRepository {
+object CatsRepository {
 
     private val mutableCats = MutableLiveData<List<Cat>>()
     val cats: LiveData<List<Cat>> get() = mutableCats
@@ -21,15 +21,5 @@ class CatsRepository {
 
     fun addCats(cats: List<Cat>) {
         mutableCats.value = mutableCats.value?.plus(cats)
-    }
-
-    companion object {
-        var repo: CatsRepository? = null
-        fun get(): CatsRepository {
-            if (repo == null) {
-                repo = CatsRepository()
-                return repo!!
-            } else return repo!!
-        }
     }
 }

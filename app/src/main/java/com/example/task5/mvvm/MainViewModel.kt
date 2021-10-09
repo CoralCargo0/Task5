@@ -6,7 +6,7 @@ import com.example.task5.network.api.CatsApiImpl
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    val repository = CatsRepository.get()
+    val repository = CatsRepository
     fun addCats() {
         viewModelScope.launch {
             repository.addCats(CatsApiImpl.getListOfCats())

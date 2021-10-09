@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,25 +12,23 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.task5.R
 
-class MainActivity : AppCompatActivity(R.layout.activity_main){
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private var readPermissionGranted = false
     private var writePermissionGranted = false
-    private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
+    private val permissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            readPermissionGranted =
+                permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
+            writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE]
+                ?: writePermissionGranted
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.host_fragment) as NavHostFragment? ?: return
-
-        permissionsLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-                readPermissionGranted =
-                    permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
-                writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE]
-                    ?: writePermissionGranted
-            }
         updateOrRequestPermissions()
         val navController = host.navController
         setupActionBarWithNavController(navController)
@@ -62,6 +59,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main){
             permissionsLauncher.launch(permissionsToRequest.toTypedArray())
         }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.host_fragment).navigateUp()
     }

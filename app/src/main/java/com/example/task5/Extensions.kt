@@ -36,7 +36,7 @@ fun Bitmap.savePhotoToExternalStorage(displayName: String, context: Context): Bo
 }
 
 fun RecyclerView.isLastItemDisplaying(): Boolean {
-    if (this.adapter!!.itemCount != 0) {
+    if (this.adapter?.let { it.itemCount != 0 } == true) {
         val lastVisibleItemPosition =
             (this.layoutManager as GridLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
         if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition >= this.adapter!!
