@@ -27,6 +27,7 @@ fun Bitmap.savePhotoToExternalStorage(displayName: String, context: Context): Bo
                 if (!this.compress(Bitmap.CompressFormat.JPEG, IMAGE_QUALITY, outputStream)) {
                     throw IOException("Couldn't save bitmap")
                 }
+                outputStream?.close()
             }
         } ?: throw IOException("Couldn't create MediaStore entry")
         true
