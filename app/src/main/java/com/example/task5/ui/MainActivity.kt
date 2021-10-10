@@ -27,11 +27,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val host: NavHostFragment = supportFragmentManager
-            .findFragmentById(R.id.host_fragment) as NavHostFragment? ?: return
         updateOrRequestPermissions()
-        val navController = host.navController
-        setupActionBarWithNavController(navController)
+
+        setupActionBarWithNavController(
+            (
+                supportFragmentManager
+                    .findFragmentById(R.id.host_fragment) as NavHostFragment? ?: return
+                    ).navController
+        )
     }
 
     private fun updateOrRequestPermissions() {

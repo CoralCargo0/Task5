@@ -42,11 +42,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun bindUi() {
-        val url = navigationArgs.url
-        val id = navigationArgs.id
         binding.apply {
-            catview.load(url)
-            catId.text = id
+            catview.load(navigationArgs.url)
+            catId.text = navigationArgs.id
             saveButton.setOnClickListener {
                 saveToGallery()
             }
